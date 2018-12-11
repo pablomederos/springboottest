@@ -3,10 +3,15 @@ package com.pgmsoft.profesores.dao.impl;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.pgmsoft.profesores.dao.SocialMediaDao;
 import com.pgmsoft.profesores.model.SocialMedia;
 import com.pgmsoft.profesores.model.TeacherSocialMedia;
 
+@Repository
+@Transactional
 public class SocialMediaDaoImpl extends AbstractSession implements SocialMediaDao {
 
 	/**
@@ -18,13 +23,13 @@ public class SocialMediaDaoImpl extends AbstractSession implements SocialMediaDa
 	@Override
 	public List<SocialMedia> listAll() {
 
-		return getSession().createQuery("from SocialMedia").list();
+		return getSession().createQuery("from SocialMedia").getResultList();
 	}
 
 	@Override
 	public SocialMedia findSocialMediaById(Integer id) {
 
-		return getSession().get(SocialMedia.class, id);
+		return getSession().getReference(SocialMedia.class, id);
 	}
 
 	@Override
@@ -32,14 +37,14 @@ public class SocialMediaDaoImpl extends AbstractSession implements SocialMediaDa
 
 		SocialMedia socialmedia = findSocialMediaById(id);
 		Optional.of(socialmedia).ifPresent(
-					s -> getSession().delete(socialmedia)
+					s -> getSession().remove(socialmedia)
 				);
 	}
 
 	@Override
 	public void updateSocialMedia(SocialMedia socialMedia) {
 
-		getSession().update(socialMedia);
+		getSession().refresh(socialMedia);
 	}
 
 	@Override
@@ -57,7 +62,7 @@ public class SocialMediaDaoImpl extends AbstractSession implements SocialMediaDa
 						+ "ts.nickname = :nickname")
 				.setParameter("id", id)
 				.setParameter("nickname", nickname)
-				.list();
+				.getResultList();
 		
 		if(objects.size() > 0) {
 			for(Object[] obj: objects) {
@@ -77,7 +82,7 @@ public class SocialMediaDaoImpl extends AbstractSession implements SocialMediaDa
 	public List<SocialMedia> findSocialMediaByName(String name) {
 
 		return getSession().createQuery("from SocialMedia where name = :name")
-				.setParameter("name", name).list();
+				.setParameter("name", name).getResultList();
 	}
 
 }

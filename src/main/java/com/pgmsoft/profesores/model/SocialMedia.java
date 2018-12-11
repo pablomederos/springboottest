@@ -36,13 +36,14 @@ public class SocialMedia implements Serializable{
 	private Set<TeacherSocialMedia> teacherSocialMedia;
 	
 	public SocialMedia(String name, String icon) {
-		super();
+		
 		this.name = name;
 		this.icon = icon;
 	}
 	public SocialMedia() {
-		super();
+		
 	}
+	
 	public Integer getIdsocial_media() {
 		return idsocial_media;
 	}

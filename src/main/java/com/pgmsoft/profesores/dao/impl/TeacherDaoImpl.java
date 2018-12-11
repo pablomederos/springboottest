@@ -3,9 +3,14 @@ package com.pgmsoft.profesores.dao.impl;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.pgmsoft.profesores.dao.TeacherDao;
 import com.pgmsoft.profesores.model.Teacher;
 
+@Repository
+@Transactional
 public class TeacherDaoImpl extends AbstractSession implements TeacherDao {
 
 	public TeacherDaoImpl() {
@@ -20,13 +25,13 @@ public class TeacherDaoImpl extends AbstractSession implements TeacherDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Teacher> findAllTeachers() {
-		return getSession().createQuery("from Teacher").list();
+		return getSession().createQuery("from Teacher").getResultList();
 	}
 
 	@Override
 	public Teacher findTeacherById(Integer id) {
 		
-		return getSession().get(Teacher.class, id);
+		return getSession().getReference(Teacher.class, id);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -35,7 +40,7 @@ public class TeacherDaoImpl extends AbstractSession implements TeacherDao {
 		
 		return getSession().createQuery("from Teacher where name = :name")
 				.setParameter("name", name)
-				.list();
+				.getResultList();
 	}
 
 	@Override
@@ -43,13 +48,13 @@ public class TeacherDaoImpl extends AbstractSession implements TeacherDao {
 
 		Teacher teacher = findTeacherById(id);
 		Optional.of(teacher).ifPresent(
-					t -> getSession().delete(t)
+					t -> getSession().remove(t)
 				);
 	}
 
 	@Override
 	public void updateTeacher(Teacher teacher) {
-		getSession().update(teacher);
+		getSession().refresh(teacher);
 	}
 
 }
