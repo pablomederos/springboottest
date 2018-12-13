@@ -43,7 +43,7 @@ public class DatabaseConfiguration {
 		properties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
 		properties.put("show_sql", true);
 		properties.put("hibernate.jdbc.lob.non_contextual_creation", true);
-		properties.put("hibernate.hbm2ddl.auto", "create");
+		//properties.put("hibernate.hbm2ddl.auto", "create");
 		
 		return properties;
 	}

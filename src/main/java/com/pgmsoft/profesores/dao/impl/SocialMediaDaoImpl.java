@@ -77,12 +77,11 @@ public class SocialMediaDaoImpl extends AbstractSession implements SocialMediaDa
 		return null;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public List<SocialMedia> findSocialMediaByName(String name) {
+	public SocialMedia findSocialMediaByName(String name) {
 
-		return getSession().createQuery("from SocialMedia where name = :name")
-				.setParameter("name", name).list();
+		return (SocialMedia) getSession().createQuery("from SocialMedia where name = :name")
+				.setParameter("name", name).uniqueResult();
 	}
 
 }

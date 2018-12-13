@@ -54,7 +54,7 @@ public class SocialMediaServiceImpl implements SocialMediaService{
 	}
 
 	@Override
-	public List<SocialMedia> findSocialMediaByName(String name) {
+	public SocialMedia findSocialMediaByName(String name) {
 		
 		return socialMediaDao.findSocialMediaByName(name);
 	}

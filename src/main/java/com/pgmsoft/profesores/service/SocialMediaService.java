@@ -18,7 +18,7 @@ public interface SocialMediaService extends Serializable {
 
 	void saveSocialMedia(SocialMedia socialMedia);
 
-	List<SocialMedia> findSocialMediaByName(String name);
+	SocialMedia findSocialMediaByName(String name);
 
 	TeacherSocialMedia findSocialMediaByIdAndName(Integer id, String nickname);
 }
