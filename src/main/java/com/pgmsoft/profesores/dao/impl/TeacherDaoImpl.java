@@ -25,13 +25,13 @@ public class TeacherDaoImpl extends AbstractSession implements TeacherDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Teacher> findAllTeachers() {
-		return getSession().createQuery("from Teacher").getResultList();
+		return getSession().createQuery("from Teacher").list();
 	}
 
 	@Override
 	public Teacher findTeacherById(Integer id) {
 		
-		return getSession().getReference(Teacher.class, id);
+		return getSession().get(Teacher.class, id);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -40,7 +40,7 @@ public class TeacherDaoImpl extends AbstractSession implements TeacherDao {
 		
 		return getSession().createQuery("from Teacher where name = :name")
 				.setParameter("name", name)
-				.getResultList();
+				.list();
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class TeacherDaoImpl extends AbstractSession implements TeacherDao {
 
 		Teacher teacher = findTeacherById(id);
 		Optional.of(teacher).ifPresent(
-					t -> getSession().remove(t)
+					t -> getSession().delete(t)
 				);
 	}
 

@@ -26,31 +26,31 @@ public class CourseDaoImpl extends AbstractSession implements CourseDao {
 
 	@Override
 	public void deleteCourse(Integer id) {
-		Course course = getSession().getReference(Course.class, id);
-		Optional.of(course).ifPresent(c -> getSession().remove(course));
+		Course course = getSession().get(Course.class, id);
+		Optional.of(course).ifPresent(c -> getSession().delete(course));
 	}
 
 	@Override
 	public void updateCourse(Course course) {
-		getSession().refresh(course);
+		getSession().update(course);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Course> listAll() {
-		return getSession().createQuery("from Course").getResultList();
+		return getSession().createQuery("from Course").list();
 	}
 
 	@Override
 	public Course findById(Integer id) {
-		return getSession().getReference(Course.class, id);
+		return getSession().get(Course.class, id);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Course> findCourseByName(String name) {
 		
-		return getSession().createQuery("from Course where name = :name").setParameter("name", name).getResultList();
+		return getSession().createQuery("from Course where name = :name").setParameter("name", name).list();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -60,7 +60,7 @@ public class CourseDaoImpl extends AbstractSession implements CourseDao {
 		return getSession()
 				.createQuery("from Course c join c.teacher t on t.id_teacher = :id")
 				.setParameter("id", id)
-				.getResultList();
+				.list();
 	}
 
 }
